@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для моєї Настюші ❤️</title>
+    <style>
+        /* Основні стилі */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffc0cb;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            touch-action: manipulation;
+        }
+
+        /* Анімовані сердечка на фоні */
+        .heart-bg {
+            position: absolute;
+            top: -10%;
+            color: rgba(255, 105, 180, 0.6);
+            font-size: 20px;
+            user-select: none;
+            animation: fall linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* ГОЛОВНИЙ КОНТЕЙНЕР ПО ЦЕНТРУ */
+        .main-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            border: 2px solid #ff69b4;
+            max-width: 80%;
+        }
+
+        h1 {
+            color: #d11d53;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p {
+            color: #ff1493;
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        /* КУТОВА ТАБЛИЧКА */
+        .corner-card {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border: 2px solid #ff1493;
+            z-index: 20;
+            text-align: center;
+            max-width: 250px;
+        }
+
+        .corner-card h3 {
+            color: #d11d53;
+            margin: 0;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Блок з кнопками так/ні */
+        .options {
+            display: none;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* СТИЛІ ДЛЯ КНОПОК */
+        .btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            transition: transform 0.3s, background-color 0.3s;
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        .btn:hover { background-color: #ff1493; transform: scale(1.05); }
+        .btn:active { transform: scale(0.95); }
+
+        .small-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        /* Кнопка "НІ", яка буде літати */
+        #noBtn {
+            position: relative;
+            z-index: 100; /* Щоб була поверх усього */
+            transition: left 0.2s ease-out, top 0.2s ease-out;
+        }
+
+        /* Приховані повідомлення */
+        .hidden-message {
+            display: none;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #d11d53;
+            font-size: 1.6rem;
+            animation: fadeIn 1s;
+        }
+
+        .final-love-message {
+            display: none;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #d11d53;
+            font-size: 1.2rem;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>Кохаю Настюшу! ❤️</h1>
+        <p>Ти наяскравіше сонечко у моєму житті)</p>
+        
+        <button class="btn" onclick="showMainMessage()">Натисни тут</button>
+        
+        <div id="mainMessage" class="hidden-message">
+            Ти неймовірна! ✨🌹
+        </div>
+    </div>
+
+    <div class="corner-card" id="cornerCard">
+        <h3 id="cornerTitle" onclick="showLoveOptions()">а ти мене кохаєш?)</h3>
+        
+        <div id="optionsBlock" class="options">
+            <button id="yesBtn" class="btn small-btn" onclick="yesClick()">так</button>
+            <button id="noBtn" class="btn small-btn">ні</button>
+        </div>
+
+        <div id="finalLoveMessage" class="final-love-message">
+            Я так і знав! ❤️🥰
+        </div>
+    </div>
+
+    <script>
+        // --- Фоновий ефект сердечок ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // --- Логіка головної кнопки по центру ---
+        function showMainMessage() {
+            document.getElementById('mainMessage').style.display = 'block';
+            for(let i=0; i<20; i++) { setTimeout(createHeart, i * 50); }
+        }
+
+        // --- Логіка кутової таблички ---
+        const noBtn = document.getElementById('noBtn');
+
+        // Показуємо кнопки так/ні
+        function showLoveOptions() {
+            document.getElementById('optionsBlock').style.display = 'flex';
+            document.getElementById('cornerTitle').style.display = 'none';
+        }
+
+        // Функція втечі кнопки "ні"
+        function moveButton(e) {
+            if(e) e.preventDefault(); 
+
+            if (document.getElementById('optionsBlock').style.display === 'flex') {
+                // Міняємо позицію на fixed, щоб кнопка вилетіла за межі своєї маленької таблички
+                if (noBtn.style.position !== 'fixed') {
+                    noBtn.style.position = 'fixed';
+                }
+
+                const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+                const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+                const randomX = Math.max(10, Math.random() * maxX);
+                const randomY = Math.max(10, Math.random() * maxY);
+
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+            }
+        }
+
+        // Запуск втечі при наведенні або дотику
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton, {passive: false});
+
+        // Натискання на "так"
+        function yesClick() {
+            noBtn.style.display = 'none';
+            document.getElementById('yesBtn').style.display = 'none';
+            document.getElementById('finalLoveMessage').style.display = 'block';
+            
+            // Великий феєрверк із сердечок
+            for(let i=0; i<40; i++) { setTimeout(createHeart, i * 30); }
+        }
+    </script>
+</body>
+</html>
